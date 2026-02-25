@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mappa GTA V</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #map {
+      height: 100vh;
+    }
+
+    .popup-grande {
+      width: 250px;
+      text-align: center;
+      font-family: sans-serif;
+    }
+
+    .popup-grande img {
+      width: 90%;
+      border-radius: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>  
+// 1️⃣ Creiamo la mappa
+var map = L.map('map', {
+  crs: L.CRS.Simple
+});
+
+map.on('click', function(e) {
+  console.log(e.latlng);
+});
+
+// Dimensione Immagine
+var bounds = [[0,0], [1000,1000]];
+
+// Immagine GTA
+var image = L.imageOverlay('mappa.jpg', bounds).addTo(map);
+
+// Zoom
+map.fitBounds(bounds);
+
+
+
+// Icone
+
+var redIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+
+// Punti
+L.marker([86.37305492863652,550.25], { icon: redIcon }).addTo(map)
+  .bindPopup(`
+    <div class="popup-grande">
+      <h3>Don Salieri</h3>
+      <img src="/Mappa-NPC-Investigativa/immagini/I2OARBx.png">
+      <p class="descrizione">
+        Droga / merci al Civ.16
+      </p>
+    </div>
+  `, {
+    maxWidth: 250,
+    minWidth: 250
+  });
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
