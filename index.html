@@ -9,25 +9,28 @@
         href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
   <style>
-    body {
-      margin: 0;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
 
-    #map {
-      height: 100vh;
-    }
+  #map {
+    height: 100vh;
+    width: 100vw;
+  }
 
-    .popup-grande {
-      width: 250px;
-      text-align: center;
-      font-family: sans-serif;
-    }
+  .popup-grande {
+    width: 250px;
+    text-align: center;
+    font-family: sans-serif;
+  }
 
-    .popup-grande img {
-      width: 90%;
-      border-radius: 14px;
-    }
-  </style>
+  .popup-grande img {
+    width: 90%;
+    border-radius: 14px;
+  }
+</style>
 </head>
 
 <body>
@@ -37,23 +40,38 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>  
-// 1️⃣ Creiamo la mappa
+// Cappa e Immagine
 var map = L.map('map', {
-  crs: L.CRS.Simple
+  crs: L.CRS.Simple,
+  zoomControl: true,
+  minZoom: -10,
+  maxZoom: 5
 });
+
+var imageHeight = 9216;
+var imageWidth = 6144;
+
+var bounds = [[0, 0], [imageHeight, imageWidth]];
+
+L.imageOverlay('mappa2_upscayl_2x_high-fidelity-4x.webp', bounds).addTo(map);
+
+// calcolo zoom perfetto 
+var containerHeight = map.getContainer().clientHeight;
+var zoom = Math.log2(containerHeight / imageHeight);
+
+// centra e applica zoom
+map.setView([imageHeight / 2, imageWidth / 2], zoom);
+
+map.setMaxBounds(bounds);
+
+
+  // Punto in console
+map.fitBounds(bounds);
 
 map.on('click', function(e) {
   console.log(e.latlng);
 });
 
-// Dimensione Immagine
-var bounds = [[0,0], [1000,1000]];
-
-// Immagine GTA
-var image = L.imageOverlay('mappa.jpg', bounds).addTo(map);
-
-// Zoom
-map.fitBounds(bounds);
 
 
 
