@@ -1,35 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Mappa GTA V</title>
+<meta charset="utf-8">
+<title>Mappa GTA V</title>
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-  <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
-  #map {
-    height: 100vh;
-    width: 100vw;
-  }
+#map {
+  height: 100vh;
+  width: 100vw;
+}
 
-  .popup-grande {
-    width: 250px;
-    text-align: center;
-    font-family: sans-serif;
-  }
+.popup-grande {
+  width: 260px;
+  text-align: center;
+  font-family: sans-serif;
+}
 
-  .popup-grande img {
-    width: 90%;
-    border-radius: 14px;
-  }
+/* ===== SLIDER ===== */
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.slide img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.nome {
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 70px;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.prev { left: 5px; }
+.next { right: 5px; }
+
+.prev:hover, .next:hover {
+  background: rgba(0,0,0,0.85);
+}
 </style>
 </head>
 
@@ -37,10 +85,12 @@
 
 <div id="map"></div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>  
-// Cappa e Immagine
+
+<script>
+
+// ===== MAPPA =====
+
 var map = L.map('map', {
   crs: L.CRS.Simple,
   zoomControl: true,
@@ -55,27 +105,14 @@ var bounds = [[0, 0], [imageHeight, imageWidth]];
 
 L.imageOverlay('mappa2_upscayl_2x_high-fidelity-4x.webp', bounds).addTo(map);
 
-// calcolo zoom perfetto 
 var containerHeight = map.getContainer().clientHeight;
 var zoom = Math.log2(containerHeight / imageHeight);
 
-// centra e applica zoom
 map.setView([imageHeight / 2, imageWidth / 2], zoom);
-
 map.setMaxBounds(bounds);
 
 
-  // Punto in console
-map.fitBounds(bounds);
-
-map.on('click', function(e) {
-  console.log(e.latlng);
-});
-
-
-
-
-// Icone
+// ===== ICONA =====
 
 var violetIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
@@ -87,35 +124,95 @@ var violetIcon = new L.Icon({
 });
 
 
+// ===== MARKER CON 8 SLIDE =====
 
-// Punti
 L.marker([2170,2897], { icon: violetIcon }).addTo(map)
-  .bindPopup(`
-    <div class="popup-grande">
-      <h3>Civ.123</h3>
-      <p class="descrizione">
-        👤 Ryu Shezen
-        👤 Franky West
-        👤 Wei Shaofeng 
-        👤 Marcus Lee
-        👤 Johnny Lee
-        👤 Morgan Draymoor
-        👤 Franklin Black
-        👤 Mei Ling Zhou
-        👤 Tze Low Long
-      </p>
-    </div>
-  `, {
-    maxWidth: 250,
-    minWidth: 250
+.bindPopup(`
+<div class="popup-grande">
+<h3>Civ.123</h3>
+
+<div class="slider">
+
+  <div class="slide active">
+    <img src="Immagini/Screenshot 2026-02-16 094906.png">
+    <div class="nome">👤 Ryu Shezen</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 094913.png">
+    <div class="nome">👤 Franky West</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 094922.png">
+    <div class="nome">👤 Wei Shaofeng</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 094934.png">
+    <div class="nome">👤 Marcus Lee</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 094942.png">
+    <div class="nome">👤 Johnny Lee</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 094949.png">
+    <div class="nome">👤 Morgan Draymoor</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 095000.png">
+    <div class="nome">👤 Franklin Black</div>
+  </div>
+
+  <div class="slide">
+    <img src="Immagini/Screenshot 2026-02-16 095010.png">
+    <div class="nome">👤 Mei Ling Zhou</div>
+  </div>
+
+  <button class="prev">◀</button>
+  <button class="next">▶</button>
+
+</div>
+</div>
+`, {
+  maxWidth: 260,
+  minWidth: 260
+});
+
+
+// ===== SCRIPT SLIDER =====
+
+map.on('popupopen', function () {
+  const sliders = document.querySelectorAll('.slider');
+
+  sliders.forEach(slider => {
+    let slides = slider.querySelectorAll('.slide');
+    let current = 0;
+
+    const showSlide = (index) => {
+      slides.forEach(s => s.classList.remove('active'));
+      slides[index].classList.add('active');
+    };
+
+    slider.querySelector('.next').onclick = () => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    };
+
+    slider.querySelector('.prev').onclick = () => {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    };
+
+    showSlide(current);
   });
-
-
+});
 
 </script>
 
 </body>
 </html>
-
-
-
