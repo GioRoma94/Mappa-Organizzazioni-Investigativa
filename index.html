@@ -26,7 +26,7 @@ html, body {
   font-family: sans-serif;
 }
 
-/* ===== SLIDER ===== */
+/*  SLIDER  */
 
 .slider {
   position: relative;
@@ -78,6 +78,11 @@ html, body {
 .prev:hover, .next:hover {
   background: rgba(0,0,0,0.85);
 }
+
+      .no-crop {
+  object-fit: contain !important;
+  background: #000;
+}
 </style>
 </head>
 
@@ -89,7 +94,7 @@ html, body {
 
 <script>
 
-// ===== MAPPA =====
+// MAPPA
 
 var map = L.map('map', {
   crs: L.CRS.Simple,
@@ -112,7 +117,7 @@ map.setView([imageHeight / 2, imageWidth / 2], zoom);
 map.setMaxBounds(bounds);
 
 
-// ===== ICONA =====
+// ICONA
 
 var violetIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
@@ -124,7 +129,7 @@ var violetIcon = new L.Icon({
 });
 
 
-// ===== MARKER CON 8 SLIDE =====
+// MARKER + SLIDE
 
 L.marker([2170,2897], { icon: violetIcon }).addTo(map)
 .bindPopup(`
@@ -164,8 +169,8 @@ L.marker([2170,2897], { icon: violetIcon }).addTo(map)
   </div>
 
   <div class="slide">
-    <img src="Immagini/Screenshot 2026-02-16 095000.png">
-    <div class="nome">👤 Franklin Black</div>
+      <img src="immagini/franklin.jpg" class="no-crop">
+      <div class="nome">👤 Franklin Black</div>
   </div>
 
   <div class="slide">
@@ -184,7 +189,7 @@ L.marker([2170,2897], { icon: violetIcon }).addTo(map)
 });
 
 
-// ===== SCRIPT SLIDER =====
+// SLIDER
 
 map.on('popupopen', function () {
   const sliders = document.querySelectorAll('.slider');
